@@ -1,0 +1,72 @@
+body {
+  width: 500px;
+  height: 500px;
+  padding: 0px 30px 30px 30px;
+  border: solid 10px;
+  border-color: cornflowerblue;
+  border-radius: 30px;
+}
+
+::backdrop {
+  background-color: grey;
+  opacity: 0.75;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  min-width: 500px;
+  justify-content: space-between;
+}
+
+#addBookmarkBtn {
+  background-image: url('../images/add-bookmark.png');
+  background-size: contain;
+  width: 25px;
+  height: 25px;
+  display: block;
+}
+
+#listOfBookmarks {
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+  max-height: 470px;
+}
+
+#listOfBookmarks li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bookmarkText {
+  max-width: 400px;
+  overflow-x: hidden;
+  text-wrap: nowrap;
+}
+
+.bookmarkIcons {
+  display: flex;
+  align-items: center;
+}
+
+.editBookmarkBtn {
+  margin-right: 20px;
+}
+
+.editBookmarkBtn {
+  background-image: url('../images/edit-bookmark.png');
+  background-size: contain;
+  width: 25px;
+  height: 25px;
+  display: block;
+}
+
+.deleteBookmarkBtn {
+  background-image: url('../images/delete-bookmark.png');
+  background-size: contain;
+  width: 25px;
+  height: 25px;
+  display: block;
+}
