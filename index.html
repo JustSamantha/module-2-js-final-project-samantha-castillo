@@ -11,14 +11,25 @@
     <header>
       <h1>Bookmark Manger</h1>
       <a href="#" id="addBookmarkBtn" alt="Add Bookmark"></a>
-      <dialog>
+      <dialog id="bookmarkDialog">
         <h2>Add Bookmark</h2>
+        <form action="#" method="post" id="bookmarkForm">
+          <label for="bookmarkName">Name</label>
+          <input name="bookmarkName" id="bookmarkName" maxlength="20" />
+          <label for="bookmarkURL">URL</label>
+          <input name="bookmarkURL" id="bookmarkURL" />
+          <button id="submitBookmarkDialogBtn" type="submit">Add</button>
+          <button id="closeBookmarkDialogBtn" type="button">Cancel</button>
+        </form>
       </dialog>
     </header>
     <section>
       <ul id="listOfBookmarks">
         <li>
-          <div class="bookmarkText">Google - https://www.google.com/asdfajksdbfkjhasgdfjhabscuysajdbclusadbfcjalshdbflaiskudbflaiusdkbfajkslhdfblasikjdfbaslkudhfkasjdfhliuashdfadslkjfh</div>
+          <div class="bookmarkText">
+            Google -
+            https://www.google.com/asdfajksdbfkjhasgdfjhabscuysajdbclusadbfcjalshdbflaiskudbflaiusdkbfajkslhdfblasikjdfbaslkudhfkasjdfhliuashdfadslkjfh
+          </div>
           <div class="bookmarkIcons">
             <a href="#" class="editBookmarkBtn" alt="Edit Bookmark"></a>
             <a href="#" class="deleteBookmarkBtn" alt="Delete Bookmark"></a>
