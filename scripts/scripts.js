@@ -20,9 +20,11 @@ function addItemHTML(name, url) {
   // Main li
   const mainLi = document.createElement('li');
   // Item name and url
-  const bookmarkTextDiv = document.createElement('div');
-  bookmarkTextDiv.className = 'bookmarkText';
-  bookmarkTextDiv.innerHTML = name + ' - ' + url;
+  const bookmarkTextLink = document.createElement('a');
+  bookmarkTextLink.className = 'bookmarkText';
+  bookmarkTextLink.innerHTML = name + ' - ' + url;
+  bookmarkTextLink.target = '_blank';
+  bookmarkTextLink.href = url;
   // Bookmark Icons
   const bookmarkIcons = document.createElement('div');
   bookmarkIcons.className = 'bookmarkIcons';
@@ -40,7 +42,7 @@ function addItemHTML(name, url) {
   // Assemble everything
   bookmarkIcons.appendChild(editBookmarkLink);
   bookmarkIcons.appendChild(deleteBookmarkLink);
-  mainLi.appendChild(bookmarkTextDiv);
+  mainLi.appendChild(bookmarkTextLink);
   mainLi.appendChild(bookmarkIcons);
 
   bkmrkList.appendChild(mainLi);
@@ -52,6 +54,8 @@ function addEditBookmark(e) {
   e.preventDefault();
   if (bkmrkDialogTitle.textContent.includes('Add')) {
     console.log('Add bookmark');
+    addItemHTML(bkmrkFormName.value, bkmrkFormURL.value);
+    bkmrkDialog.close();
   } else {
     console.log('Edit bookmark');
   }

@@ -76,10 +76,16 @@ header {
   justify-content: space-between;
 }
 
-.bookmarkText {
+#listOfBookmarks li:hover {
+  background-color: lightgray;
+}
+
+.bookmarkTextLink {
   max-width: 400px;
   overflow-x: hidden;
   text-wrap: nowrap;
+  text-decoration: none;
+  color: black;
 }
 
 .bookmarkIcons {
