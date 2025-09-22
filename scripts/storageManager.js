@@ -1,61 +1,66 @@
 /**
  * Saves an item to the browser's local storage
- * @param {String} item Item to be saved to local storage
+ * @param {Object} name Item to be saved to local storage
  */
 function saveItem(item) {
   let bookmarksStorage = JSON.parse(localStorage.getItem('bookmarks'));
   if (bookmarksStorage === null) {
-    bookmarksStorage = [];
+    bookmarksStorage = {};
   }
-  bookmarksStorage.push(item);
+  bookmarksStorage = { ...bookmarksStorage, ...item };
   localStorage.setItem('bookmarks', JSON.stringify(bookmarksStorage));
 }
 
 /**
- * Gets the provided item from storage if found
- * @param {String} item The item to search for
- * @returns The item if found otherwise undefined
+ * Gets the object with the provided key
+ * @param {String} key The key of the object to search for
+ * @returns The object if found otherwise undefined
  */
-function getItem(item) {
+function getItem(key) {
   let bookmarksStorage = JSON.parse(localStorage.getItem('bookmarks'));
   if (bookmarksStorage === null) {
-    bookmarksStorage = [];
+    bookmarksStorage = {};
   }
-  return bookmarksStorage.find((foundItem) => foundItem === item);
+  return bookmarksStorage[key];
+}
+
+/**
+ * Gets all the items stored
+ * @returns The object of items
+ */
+function getAllItems() {
+  let bookmarksStorage = JSON.parse(localStorage.getItem('bookmarks'));
+  if (bookmarksStorage === null) {
+    bookmarksStorage = {};
+  }
+  return bookmarksStorage;
 }
 
 /**
  * Removes an item from the browser's local storage
- * @param {String} item Item to be removed from local storage
+ * @param {String} key The key of the object to delete
  */
-function removeItem(item) {
+function removeItem(key) {
   const bookmarksStorage = JSON.parse(localStorage.getItem('bookmarks'));
-  const newBookmarks = [];
-  bookmarksStorage.forEach((storedItem) => {
-    if (storedItem !== item) {
-      newBookmarks.push(storedItem);
-    }
-  });
-  localStorage.setItem('bookmarks', JSON.stringify(newBookmarks));
+  if (bookmarksStorage === null) {
+    bookmarksStorage = {};
+  }
+  delete bookmarksStorage[key];
+  localStorage.setItem('bookmarks', JSON.stringify(bookmarksStorage));
 }
 
 /**
  * Updates an item in local storage
- * @param {String} itemToUpdate Item to update
- * @param {String} newItem The item to replace with
+ * @param {Object} itemToUpdate Item to update
+ * @param {Object} newItem The item to replace with
  */
 function updateItem(itemToUpdate, newItem) {
   const bookmarksStorage = JSON.parse(localStorage.getItem('bookmarks'));
-  let indexFound;
-  const foundItem = bookmarksStorage.find((foundItem, index) => {
-    indexFound = index;
-    return foundItem === itemToUpdate;
-  });
-
-  if (foundItem) {
-    bookmarksStorage[indexFound] = newItem;
-    localStorage.setItem('bookmarks', JSON.stringify(bookmarksStorage));
+  if (bookmarksStorage === null) {
+    bookmarksStorage = {};
   }
+  removeItem(Object.keys(itemToUpdate)[0]);
+  saveItem(newItem);
 }
 
-export default { saveItem, getItem, removeItem, updateItem };
+export default { saveItem, getItem, getAllItems, removeItem, updateItem };
