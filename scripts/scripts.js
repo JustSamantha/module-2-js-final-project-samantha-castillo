@@ -68,16 +68,18 @@ function deleteBookmark(e) {
  */
 function addEditBookmark(e) {
   e.preventDefault();
+  const inStoreObj = storageManager.getItem(bkmrkFormName.value);
   const itemToStore = {};
   itemToStore[bkmrkFormName.value] = {
     name: bkmrkFormName.value,
     url: bkmrkFormURL.value,
   };
-  if (bkmrkDialogTitle.textContent.includes('Add')) {
+  if (bkmrkDialogTitle.textContent.includes('Add') && !inStoreObj) {
     // Add bookmark
     addItemHTML(bkmrkFormName.value, bkmrkFormURL.value);
     storageManager.saveItem(itemToStore);
-  } else {
+    bkmrkDialog.close();
+  } else if (!inStoreObj) {
     // Edit bookmark
     const prevItem = {};
     const liElements = bkmrkList.children;
@@ -95,8 +97,10 @@ function addEditBookmark(e) {
         break;
       }
     }
+    bkmrkDialog.close();
+  } else {
+    alert('Bookmark already exists');
   }
-  bkmrkDialog.close();
 }
 
 /**
@@ -106,13 +110,16 @@ function addEditBookmark(e) {
 function showAddBkmrkModal(e) {
   bkmrkDialogTitle.textContent = 'Add Bookmark';
   submitBkmrkDialogBtn.textContent = 'Add';
-  // chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-  //   bkmrkFormURL.value = tabs[0].url;
-  //   bkmrkFormName.value = tabs[0].title;
-  //   bkmrkDialog.showModal();
-  // });
-  bkmrkFormURL.value = document.URL;
-  bkmrkFormName.value = document.title;
+  if (chrome.tabs) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      bkmrkFormURL.value = tabs[0].url;
+      bkmrkFormName.value = tabs[0].title;
+      bkmrkDialog.showModal();
+    });
+  } else {
+    bkmrkFormURL.value = document.URL;
+    bkmrkFormName.value = document.title;
+  }
   bkmrkDialog.showModal();
 }
 
