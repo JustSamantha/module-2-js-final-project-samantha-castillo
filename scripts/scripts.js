@@ -14,7 +14,7 @@ const bkmrkList = document.querySelector('#listOfBookmarks');
 const prevBookmarkURL = document.querySelector('#prevBookmarkURL');
 const prevBookmarkName = document.querySelector('#prevBookmarkName');
 const sortBtn = document.querySelector('#sortBookmarksBtn');
-let sortingDirection = 'desc';
+let sortingDirection = 'asc';
 
 /**
  * Adds a li element with the provided parameters and inserts its into the DOM
