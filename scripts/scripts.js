@@ -13,6 +13,8 @@ const deleteBookmarkBtns = document.querySelectorAll('.deleteBookmarkBtn');
 const bkmrkList = document.querySelector('#listOfBookmarks');
 const prevBookmarkURL = document.querySelector('#prevBookmarkURL');
 const prevBookmarkName = document.querySelector('#prevBookmarkName');
+const sortBtn = document.querySelector('#sortBookmarksBtn');
+let sortingDirection = 'desc';
 
 /**
  * Adds a li element with the provided parameters and inserts its into the DOM
@@ -138,6 +140,48 @@ function showEditBkmrkModal(e) {
   bkmrkDialog.showModal();
 }
 
+/**
+ * Handles the click on sort bookmarks button
+ * @param {Event} e The event object
+ */
+function sortBookmarks(e) {
+  const allItems = storageManager.getAllItems();
+  const ordered = sortObject(allItems, sortingDirection);
+  storageManager.saveAllItems(ordered);
+
+  // Re render all bookmarks
+  while (bkmrkList.firstChild) {
+    bkmrkList.removeChild(bkmrkList.firstChild);
+  }
+  for (let key in ordered) {
+    addItemHTML(ordered[key].name, ordered[key].url);
+  }
+  if (sortingDirection === 'desc') {
+    sortingDirection = 'asc';
+  } else {
+    sortingDirection = 'desc';
+  }
+}
+
+/**
+ * Sorts an object based on the keys
+ * @param {Object} objectToSort Object to sort
+ * @param {String} sortDirection Sort direction, asc or desc
+ * @returns The ordered object
+ */
+function sortObject(objectToSort, sortDirection) {
+  let orderedKeys = Object.keys(objectToSort).sort();
+  if (sortDirection === 'asc') {
+    orderedKeys = orderedKeys.reverse();
+  }
+  const ordered = orderedKeys.reduce((obj, key) => {
+    obj[key] = objectToSort[key];
+    return obj;
+  }, {});
+
+  return ordered;
+}
+
 closeBkmrkDialogBtn.addEventListener('click', (e) => {
   bkmrkDialog.close();
 });
@@ -149,6 +193,7 @@ deleteBookmarkBtns.forEach((deleteBookmarkBtn) => {
 });
 bkmrkBtn.addEventListener('click', showAddBkmrkModal);
 bkmrkForm.addEventListener('submit', addEditBookmark);
+sortBtn.addEventListener('click', sortBookmarks);
 
 // Init the page
 const allBookmarks = storageManager.getAllItems();

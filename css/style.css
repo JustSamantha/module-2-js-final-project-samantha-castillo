@@ -55,12 +55,26 @@ header {
   justify-content: space-between;
 }
 
+#headerIcons {
+  display: flex;
+  align-items: center;
+}
+
 #addBookmarkBtn {
   background-image: url('../images/add-bookmark.png');
   background-size: contain;
   width: 25px;
   height: 25px;
   display: block;
+}
+
+#sortBookmarksBtn {
+  background-image: url('../images/sorting.png');
+  background-size: contain;
+  width: 35px;
+  height: 35px;
+  display: block;
+  margin-left: 5px;
 }
 
 #listOfBookmarks {

@@ -37,6 +37,14 @@ function getAllItems() {
 }
 
 /**
+ * Save all the items replacing the existing bookmarks
+ * @param {Object} items The items object to replace with
+ */
+function saveAllItems(items) {
+  localStorage.setItem('bookmarks', JSON.stringify(items));
+}
+
+/**
  * Removes an item from the browser's local storage
  * @param {String} key The key of the object to delete
  */
@@ -63,4 +71,4 @@ function updateItem(itemToUpdate, newItem) {
   saveItem(newItem);
 }
 
-export default { saveItem, getItem, getAllItems, removeItem, updateItem };
+export default { saveItem, saveAllItems, getItem, getAllItems, removeItem, updateItem };
