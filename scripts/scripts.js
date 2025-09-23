@@ -49,7 +49,7 @@ function addItemHTML(name, url) {
   mainLi.appendChild(bookmarkTextLink);
   mainLi.appendChild(bookmarkIcons);
 
-  bkmrkList.appendChild(mainLi);
+  bkmrkList.prepend(mainLi);
 }
 
 /**
