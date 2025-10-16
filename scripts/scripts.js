@@ -1,4 +1,4 @@
-import storageManager from './storageManager.js';
+import { StorageManager } from './StorageManager.js';
 
 const bkmrkDialog = document.querySelector('dialog');
 const bkmrkDialogTitle = document.querySelector('dialog h2');
@@ -61,7 +61,7 @@ function addItemHTML(name, url) {
 function deleteBookmark(e) {
   const liNode = e.target.parentNode.parentNode;
   liNode.remove();
-  storageManager.removeItem(liNode.children[0].name);
+  StorageManager.removeItem(liNode.children[0].name);
 }
 
 /**
@@ -70,7 +70,7 @@ function deleteBookmark(e) {
  */
 function addEditBookmark(e) {
   e.preventDefault();
-  const inStoreObj = storageManager.getItem(bkmrkFormName.value);
+  const inStoreObj = StorageManager.getItem(bkmrkFormName.value);
   const itemToStore = {};
   itemToStore[bkmrkFormName.value] = {
     name: bkmrkFormName.value,
@@ -79,9 +79,9 @@ function addEditBookmark(e) {
   if (bkmrkDialogTitle.textContent.includes('Add') && !inStoreObj) {
     // Add bookmark
     addItemHTML(bkmrkFormName.value, bkmrkFormURL.value);
-    storageManager.saveItem(itemToStore);
+    StorageManager.saveItem(itemToStore);
     bkmrkDialog.close();
-  } else if (!inStoreObj) {
+  } else if (bkmrkDialogTitle.textContent.includes('Edit')) {
     // Edit bookmark
     const prevItem = {};
     const liElements = bkmrkList.children;
@@ -89,7 +89,7 @@ function addEditBookmark(e) {
       name: prevBookmarkName.value,
       url: prevBookmarkURL.value,
     };
-    storageManager.updateItem(prevItem, itemToStore);
+    StorageManager.updateItem(prevItem, itemToStore);
     for (let i = 0; i < liElements.length; i++) {
       const linkElement = liElements[i].children[0];
       if (linkElement.name === prevBookmarkName.value) {
@@ -145,9 +145,9 @@ function showEditBkmrkModal(e) {
  * @param {Event} e The event object
  */
 function sortBookmarks(e) {
-  const allItems = storageManager.getAllItems();
+  const allItems = StorageManager.getAllItems();
   const ordered = sortObject(allItems, sortingDirection);
-  storageManager.saveAllItems(ordered);
+  StorageManager.saveAllItems(ordered);
 
   // Re render all bookmarks
   while (bkmrkList.firstChild) {
@@ -196,7 +196,7 @@ bkmrkForm.addEventListener('submit', addEditBookmark);
 sortBtn.addEventListener('click', sortBookmarks);
 
 // Init the page
-const allBookmarks = storageManager.getAllItems();
+const allBookmarks = StorageManager.getAllItems();
 for (let key in allBookmarks) {
   addItemHTML(allBookmarks[key].name, allBookmarks[key].url);
 }
