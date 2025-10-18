@@ -63,6 +63,7 @@ header {
 #addBookmarkBtn {
   background-image: url('../images/add-bookmark.png');
   background-size: contain;
+  background-repeat: no-repeat;
   width: 25px;
   height: 25px;
   display: block;
@@ -70,6 +71,7 @@ header {
 
 #sortBookmarksBtn {
   background-image: url('../images/sorting.png');
+  background-repeat: no-repeat;
   background-size: contain;
   width: 35px;
   height: 35px;
